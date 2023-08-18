@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MailWayRepository extends JpaRepository<MailWay, Long> {
-    List<MailWay> findAllByMailingId(Long id);
+    List<MailWay> findAllByMailingIdOrderByIdDesc(Long id);
 }

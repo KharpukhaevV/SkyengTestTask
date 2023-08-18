@@ -5,6 +5,8 @@ import com.skyeng.test.skyengtesttask.model.Mailing;
 import com.skyeng.test.skyengtesttask.model.enums.EMailingStatus;
 import com.skyeng.test.skyengtesttask.repository.MailWayRepository;
 import com.skyeng.test.skyengtesttask.repository.MailingRepository;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
+@Tag(name = "TestTask API", description = "Skyeng test task API")
 public class MainController {
     private final MailingRepository mailingRepository;
     private final MailWayRepository mailWayRepository;
@@ -42,7 +45,7 @@ public class MainController {
 
     @GetMapping("/full_way/{id}")
     public ResponseEntity<List<MailWay>> getFullMailWay(@PathVariable("id") Long mailingId) {
-        List<MailWay> mailWays = mailWayRepository.findAllByMailingId(mailingId);
+        List<MailWay> mailWays = mailWayRepository.findAllByMailingIdOrderByIdDesc(mailingId);
         if (mailWays.isEmpty()) {
             return ResponseEntity.notFound().build();
         } else return ResponseEntity.ok(mailWays);
